@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   title: 'ClearMind AI — Doubt-Aware Chat',
   description:
     'ClearMind AI is a doubt-aware academic assistant that transparently signals confidence levels for every claim, lets you flag uncertain sentences, and helps you think critically about AI-generated information.',
+  icons: {
+    icon: '/logo.png',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

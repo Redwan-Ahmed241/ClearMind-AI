@@ -3,6 +3,7 @@
 import { Message, AIMessage, UserMessage } from '@/types/chat';
 import { useChatContext } from '@/lib/ChatContext';
 import AISentence from './AISentence';
+import Image from 'next/image';
 
 interface ChatMessageProps {
   message: Message;
@@ -47,8 +48,8 @@ export function AIMessageBubble({ message, onOpenTagPicker }: { message: AIMessa
         style={{
           width: '32px',
           height: '32px',
-          background: 'var(--text)',
           borderRadius: '8px',
+          overflow: 'hidden',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -57,10 +58,7 @@ export function AIMessageBubble({ message, onOpenTagPicker }: { message: AIMessa
         }}
         aria-hidden="true"
       >
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-          <circle cx="8" cy="8" r="6" stroke="white" strokeWidth="1.5" />
-          <path d="M5 8.5L7 10.5L11 6" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+        <Image src="/logo.png" alt="ClearMind AI Logo" width={32} height={32} style={{ objectFit: 'cover' }} />
       </div>
 
       {/* Bubble */}

@@ -1,6 +1,7 @@
 'use client';
 
 import { useChatContext } from '@/lib/ChatContext';
+import Image from 'next/image';
 
 export default function Header() {
   const { state, dispatch } = useChatContext();
@@ -25,18 +26,15 @@ export default function Header() {
           style={{
             width: '32px',
             height: '32px',
-            background: 'var(--text)',
             borderRadius: '8px',
+            overflow: 'hidden',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
           }}
           aria-hidden="true"
         >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <circle cx="8" cy="8" r="6" stroke="white" strokeWidth="1.5" />
-            <path d="M5 8.5L7 10.5L11 6" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <Image src="/logo.png" alt="ClearMind AI Logo" width={32} height={32} style={{ objectFit: 'cover' }} />
         </div>
         <div>
           <div style={{ fontSize: '14px', fontWeight: 600, lineHeight: 1.2 }}>ClearMind AI</div>

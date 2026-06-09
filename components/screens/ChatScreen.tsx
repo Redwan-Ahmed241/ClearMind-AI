@@ -14,6 +14,7 @@ import DoubtLogSheet from '@/components/DoubtLogSheet';
 import EntityModal from '@/components/EntityModal';
 import Toast from '@/components/Toast';
 import { AIMessage } from '@/types/chat';
+import Image from 'next/image';
 
 interface TagPickerState {
   isOpen: boolean;
@@ -93,18 +94,16 @@ export default function ChatScreen() {
               style={{
                 width: '48px',
                 height: '48px',
-                background: 'var(--text)',
                 borderRadius: '12px',
+                overflow: 'hidden',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 marginBottom: '16px',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
               }}
             >
-              <svg width="22" height="22" viewBox="0 0 16 16" fill="none">
-                <circle cx="8" cy="8" r="6" stroke="white" strokeWidth="1.5" />
-                <path d="M5 8.5L7 10.5L11 6" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <Image src="/logo.png" alt="ClearMind AI Logo" width={48} height={48} style={{ objectFit: 'cover' }} priority />
             </div>
             <div style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text)', marginBottom: '6px' }}>
               Ask ClearMind AI anything
