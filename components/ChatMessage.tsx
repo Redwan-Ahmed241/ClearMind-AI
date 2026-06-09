@@ -126,41 +126,69 @@ export function AIMessageBubble({ message, onOpenTagPicker }: { message: AIMessa
           ))}
         </div>
 
-        {/* Confidence legend (only if there are low/med confidence sentences) */}
-        {message.sentences.some((s) => s.confidence !== 'high') && (
-          <div
+        {/* Actions Row */}
+        <div
+          style={{
+            marginTop: '12px',
+            paddingTop: '10px',
+            borderTop: '1px solid var(--border)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            flexWrap: 'wrap',
+          }}
+        >
+          {message.sentences.some((s) => s.confidence !== 'high') && (
+            <>
+              <span style={{ fontSize: '11px', color: 'var(--muted)', fontWeight: 500 }}>Confidence:</span>
+              {message.sentences.some((s) => s.confidence === 'low') && (
+                <span style={{ fontSize: '11px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span style={{ width: '12px', height: '2px', borderBottom: '2px dotted var(--conf-low)', display: 'inline-block' }} />
+                  <span style={{ color: 'var(--conf-low)' }}>Low</span>
+                </span>
+              )}
+              {message.sentences.some((s) => s.confidence === 'med') && (
+                <span style={{ fontSize: '11px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span style={{ width: '12px', height: '2px', borderBottom: '2px dotted var(--conf-med)', display: 'inline-block' }} />
+                  <span style={{ color: 'var(--conf-med)' }}>Medium</span>
+                </span>
+              )}
+            </>
+          )}
+
+          <span style={{ flex: 1 }} />
+
+          {/* Google Search Button */}
+          <button
+            onClick={() => {
+              const lastUserMessage = state.messages
+                .slice()
+                .reverse()
+                .find((m) => m.role === 'user');
+              const query = encodeURIComponent(
+                lastUserMessage && lastUserMessage.role === 'user' ? lastUserMessage.text : "ClearMind AI"
+              );
+              window.open(`https://www.google.com/search?q=${query}`, '_blank', 'noopener,noreferrer');
+            }}
             style={{
-              marginTop: '12px',
-              paddingTop: '10px',
-              borderTop: '1px solid var(--border)',
+              fontSize: '11px',
+              color: 'var(--muted)',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              fontFamily: 'var(--font-dm-sans), sans-serif',
+              fontWeight: 500,
+              padding: 0,
               display: 'flex',
               alignItems: 'center',
-              gap: '12px',
-              flexWrap: 'wrap',
+              gap: '4px',
             }}
+            aria-label="Search this query on Google"
           >
-            <span style={{ fontSize: '11px', color: 'var(--muted)', fontWeight: 500 }}>Confidence:</span>
-            {message.sentences.some((s) => s.confidence === 'low') && (
-              <span style={{ fontSize: '11px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <span style={{ width: '12px', height: '2px', borderBottom: '2px dotted var(--conf-low)', display: 'inline-block' }} />
-                <span style={{ color: 'var(--conf-low)' }}>Low</span>
-              </span>
-            )}
-            {message.sentences.some((s) => s.confidence === 'med') && (
-              <span style={{ fontSize: '11px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <span style={{ width: '12px', height: '2px', borderBottom: '2px dotted var(--conf-med)', display: 'inline-block' }} />
-                <span style={{ color: 'var(--conf-med)' }}>Medium</span>
-              </span>
-            )}
-            {message.sentences.some((s) => s.entities.length > 0) && (
-              <>
-                <span style={{ flex: 1 }} />
-                <span style={{ fontSize: '10px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <span style={{ width: '10px', height: '10px', background: '#EDE7F6', borderRadius: '2px', display: 'inline-block' }} />
-                  <span style={{ color: '#9575CD' }}>Exact facts (verify)</span>
-                </span>
-              </>
-            )}
+            Google Search 🔍
+          </button>
+
+          {message.sentences.some((s) => s.confidence !== 'high') && (
             <button
               onClick={() => dispatch({ type: 'SET_VIEW', payload: 'confidence' })}
               style={{
@@ -177,8 +205,8 @@ export function AIMessageBubble({ message, onOpenTagPicker }: { message: AIMessa
             >
               View sources →
             </button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
